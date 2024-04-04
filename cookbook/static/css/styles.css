@@ -1,0 +1,9 @@
+#logout-form {
+  display: inline;
+  background-color: aqua;
+}
+
+#logout-form button {
+  padding: 0;
+  margin: 0;
+}
