@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 
 {% block menu %}
+<div class="top_menu">
 
+
+    {% if request.user.is_authenticated %}
+        <div class="login_field">{{ request.user.first_name }} {{ request.user.last_name }} ({{ request.user.username }})</div>
+        <div class="login_field">Выйти</div>
+    {% else %}
+        <div class="login_field">Войти</div>
+    {% endif %}
+</div>
 {% endblock %}

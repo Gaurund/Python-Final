@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm, UsernameField
+from django.core.exceptions import ValidationError
 
 
 class RecipeForm(forms.Form):
@@ -12,3 +14,15 @@ class RecipeForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(RecipeForm, self).__init__(*args, **kwargs)
         self.fields['image'].required = False
+
+
+class LoginForm(AuthenticationForm):
+    username = UsernameField(label='Enter Username', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(label='Enter Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
+    def confirm_login_allowed(self, user):
+        if user.is_staff and not user.is_superuser:
+            raise ValidationError(
+                "This account is not allowed here.",
+                code='not_allowed',
+            )

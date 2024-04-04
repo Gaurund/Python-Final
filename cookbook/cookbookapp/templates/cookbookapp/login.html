@@ -1,0 +1,14 @@
+{% extends 'cookbookapp/menu.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <p>
+        {% for recipe in recipes %}
+            <p>Рецпет "{{ recipe.name }}".</p>
+        {% endfor %}
+    </p>
+{% endblock %}
