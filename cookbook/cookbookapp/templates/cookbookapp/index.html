@@ -1,0 +1,18 @@
+{% extends 'cookbookapp/menu.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <p>
+        {% for order in orders %}
+            <p>Клиент {{ order.client.name }} заказал {{ order.date }} товары:
+                {% for o_product in order_products %}
+                    {{ o_product.product_id }}
+                {% endfor %}
+            на сумму: {{ order.total }}</p>
+        {% endfor %}
+    </p>
+{% endblock %}
