@@ -162,4 +162,8 @@ LOGGING = {
     },
 }
 
-AUTH_USER_MODEL = 'cookbookapp.User'
+# AUTH_USER_MODEL = 'cookbookapp.User'
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = BASE_DIR / 'media'

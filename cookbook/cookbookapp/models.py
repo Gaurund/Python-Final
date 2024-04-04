@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
@@ -5,13 +6,13 @@ from django.utils import timezone
 
 # Create your models here.
 
-# User = get_user_model()
+User = get_user_model()
 
 
-class User(AbstractUser):
-    # first_name = models.CharField(max_length=100)
-    # age = models.DateTimeField(default=timezone.now)
-    pass
+# class User(AbstractUser):
+#     # first_name = models.CharField(max_length=100)
+#     # age = models.DateTimeField(default=timezone.now)
+#     pass
 
 
 class Recipe(models.Model):
