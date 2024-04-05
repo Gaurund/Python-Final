@@ -1,12 +1,13 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 import logging
-from .forms import RecipeForm, LoginForm
-from .models import Recipe, User
+from .forms import RecipeForm, RegisterUserForm
+from .models import *
 
 logger = logging.getLogger(__name__)
 
@@ -25,6 +26,7 @@ def index(request):
     return render(request, template_name, context)
 
 
+@login_required
 def add_recipe_form(request):
     if request.method == 'POST':
         form = RecipeForm(request.POST, request.FILES)
@@ -47,6 +49,7 @@ def add_recipe_form(request):
             if image:
                 fs = FileSystemStorage()
                 fs.save(image.name, image)
+            return redirect(index)
 
 
     else:
@@ -54,27 +57,45 @@ def add_recipe_form(request):
     return render(request, 'cookbookapp/add_recipe.html', {'form': form})
 
 
-def login_view(request):
-    template_name = 'cookbookapp/login.html'
-    context = {
-        'title': 'Страница входа',
-    }
-
+def registration_form(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
-        username = request.POST.get('username').lower()
-        password = request.POST.get('password')
-
-        try:
-            user = User.objects.get(username=username)
-        except:
-            messages.error(request, 'User Not Found....')
-            return redirect('index')
-
-        if user is not None:
+        form = RegisterUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username=username, password=password)
             login(request, user)
+            messages.success(request, "Регистрация завершена")
             return redirect('index')
-        else:
-            messages.error(request, 'Username or Password does not match...')
+    else:
+        form = RegisterUserForm()
+    return render(request, 'registration/registration.html', {'form': form})
 
+
+def recipe(request, recipe_id):
+    template_name = 'cookbookapp/recipe.html'
+    recipe_ = Recipe.objects.get(id=recipe_id)
+    categories = RecipeCategory.objects.filter(recipe_id=recipe_id).select_related('category')
+    context = {
+        'title': 'Рецепт',
+        'recipe': recipe_,
+        'categories': categories,
+    }
     return render(request, template_name, context)
+
+
+def recipes(request):
+    template_name = 'cookbookapp/recipes.html'
+    recipes_ = Recipe.objects.all()
+
+    context = {
+        'title': 'Список всех рецептов',
+        'recipes': recipes_,
+    }
+    return render(request, template_name, context)
+
+def logout_user(request):
+    logout(request)
+    messages.success(request, "Вы успешно вышли из системы...")
+    return redirect('index')

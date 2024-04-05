@@ -1,0 +1,43 @@
+{% extends 'cookbookapp/menu.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <div>
+        {{ recipe.name }}
+    </div>
+    <div>
+        <h3>Рецепт от:</h3>
+        <p>{{ recipe.author.first_name }} {{ recipe.author.last_name }} ({{ recipe.author }})</p>
+    </div>
+    <div>
+        {% if categories %}
+        <h4>Категории</h4>
+        <ul>
+            {% for cat in categories %}
+            <li>cat</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <div>
+        <img src="/{{ recipe.image }}" width="400px">
+    </div>
+    <div>
+        <h3>Описание:</h3>
+        <p>{{ recipe.description }}</p>
+    </div>
+    <div>
+        <h3>Инструкция:</h3>
+        <p>{{ recipe.steps }}</p>
+    </div>
+    <div>
+        <h3>Время на приготовление:</h3>
+        <p>{{ recipe.cook_time }}</p>
+    </div>
+
+{% endblock %}

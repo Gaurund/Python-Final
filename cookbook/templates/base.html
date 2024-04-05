@@ -1,18 +1,55 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Кулинарная книга{% endblock %}</title>
+  <head>
+    {% block title %}
+      <title>Сайт рецептов</title>
+    {% endblock %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous">
+    <!-- Add additional CSS in static file -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
-</head>
-<body>
-    {% block menu %}
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-2">
+          {% block sidebar %}
+            <ul class="sidebar-nav">
+              <li><a href="{% url 'index' %}">Главная</a></li>
+              <li><a href="{% url 'add_recipe_form' %}">Добавить рецепт</a></li>
+              <li><a href="{% url 'recipes' %}">Все рецепты</a></li>
 
-    {% endblock %}
+              {% if user.is_authenticated %}
+               <li>User: {{ user.get_username }}</li>
+               <li>
+                 <form id="logout-form" method="post" action="{% url 'logout_user' %}">
+                   {% csrf_token %}
+                   <button type="submit" class="btn btn-link">Выйти</button>
+                 </form>
+               </li>
+             {% else %}
+               <li><a href="{% url 'login' %}?next={{ request.path }}">Войти</a></li>
+              <li><a href="{% url 'registration_form' %}">Регистрация</a></li>
+             {% endif %}
+            </ul>
+          {% endblock %}
+        </div>
+        <div class="col-sm-10 ">
+          {% if messages %}
+          <ul class="messages">
+              {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }} alert alert-warning alert-dismissible fade show" role="alert"{% endif %}>{{ message }}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></li>
+              {% endfor %}
+          </ul>
+          {% endif %}
 
-    {% block content %}
-        Список рецептов
-    {% endblock %}
-</body>
+          {% block content %}{% endblock %}</div>
+      </div>
+    </div>
+  </body>
 </html>

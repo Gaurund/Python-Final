@@ -1,0 +1,18 @@
+{% extends 'cookbookapp/menu.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    {% if recipes %}
+    {% for recipe in recipes %}
+        <div>
+            <a href="{% url 'recipe_id' recipe.id %}">{{recipe.name}}</a>
+        </div>
+    {% endfor %}
+    {% else %}
+        <div>Наша кулинарная книга пуста.</div>
+    {% endif %}
+{% endblock %}

@@ -165,9 +165,9 @@ LOGGING = {
 
 # AUTH_USER_MODEL = 'cookbookapp.User'
 
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = BASE_DIR / 'media/'
 
 LOGIN_REDIRECT_URL = '/'
 
