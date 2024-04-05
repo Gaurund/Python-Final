@@ -1,3 +1,5 @@
+import random
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -15,12 +17,11 @@ logger = logging.getLogger(__name__)
 # Create your views here.
 def index(request):
     template_name = 'cookbookapp/index.html'
-    # logger.info('Shop page accessed')
-    recipes = Recipe.objects.all()
-
+    recipes_ = list(Recipe.objects.all())
+    recipes_ = random.sample(recipes_, 5)
     context = {
         'title': 'Сайт кулинарных рецептов',
-        'recipes': recipes,
+        'recipes': recipes_,
     }
 
     return render(request, template_name, context)
@@ -94,6 +95,7 @@ def recipes(request):
         'recipes': recipes_,
     }
     return render(request, template_name, context)
+
 
 def logout_user(request):
     logout(request)
