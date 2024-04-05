@@ -6,10 +6,10 @@ from django.contrib.auth.models import User
 
 
 class RecipeForm(forms.Form):
-    name = forms.CharField(max_length=100)  # Название
-    description = forms.CharField(widget=forms.Textarea)  # Описание
-    steps = forms.CharField(widget=forms.Textarea)  # Шаги приготовления
-    cook_time = forms.DurationField()  # Время приготовления
+    name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class':'form-control'}))  # Название
+    description = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))  # Описание
+    steps = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))  # Шаги приготовления
+    cook_time = forms.DurationField(widget=forms.TextInput(attrs={'class':'form-control'}))  # Время приготовления
     image = forms.ImageField()  # Изображение
 
     def __init__(self, *args, **kwargs):

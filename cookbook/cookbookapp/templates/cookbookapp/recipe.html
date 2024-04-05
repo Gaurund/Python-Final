@@ -1,8 +1,5 @@
-{% extends 'cookbookapp/menu.html' %}
+{% extends 'base.html' %}
 
-{% block title %}
-    {{ title }}
-{% endblock %}
 
 {% block content %}
     <h1>{{ title }}</h1>
@@ -15,10 +12,10 @@
     </div>
     <div>
         {% if categories %}
-        <h4>Категории</h4>
+        <h4>Категории:</h4>
         <ul>
             {% for cat in categories %}
-            <li>cat</li>
+            <li>{{cat.category}}</li>
             {% endfor %}
         </ul>
         {% endif %}

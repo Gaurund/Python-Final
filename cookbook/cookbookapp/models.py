@@ -8,15 +8,12 @@ from django.utils import timezone
 User = get_user_model()
 
 
-# class User(AbstractUser):
-#     # first_name = models.CharField(max_length=100)
-#     # age = models.DateTimeField(default=timezone.now)
-#     pass
-
 class Category(models.Model):
     name = models.CharField(max_length=50)
+
     def __str__(self):
         return self.name
+
 
 class Recipe(models.Model):
     name = models.CharField(max_length=100)  # Название
