@@ -1,3 +1,10 @@
-# Сайт рецептов на Django
+# Django Recipe Website
 
-Учебный проект по созданию и разврётыванию онлайн приложения на фреймворке Django. Приложение поддерживает простейший функционал по внесению и просмотру кулинарных рецептов на сайте. 
+A comprehensive educational project demonstrating the creation and deployment of an online application built with the Django framework. This application provides essential functionality for adding and viewing culinary recipes on the website.
+
+## Technology Stack
+
+- **Backend Framework**: Django
+- **Language**: Python
+- **Database**: SQLite
+- **Frontend**: HTML, CSS, JavaScript
